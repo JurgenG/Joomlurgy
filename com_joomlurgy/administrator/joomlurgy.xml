@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="XXX_COM_VERSION_XXX" method="upgrade">
+    <name>com_joomlurgy</name>
+    <creationDate>2013-06-13</creationDate>
+    <copyright></copyright>
+    <license></license>
+    <author>nidhi</author>
+    <authorEmail>nidhi.gupta@daffodilsw.com</authorEmail>
+    <authorUrl>http://daffodilsw.com</authorUrl>
+    <version>1.0.0</version>
+    <description></description>
+    
+    <install> <!-- Runs on install -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall> <!-- Runs on uninstall -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+
+    <files folder="site">
+        <filename>index.html</filename>
+        <filename>joomlurgy.php</filename>
+        <filename>controller.php</filename>
+        <filename>router.php</filename>
+        <folder>views</folder>
+        <folder>models</folder>
+        <folder>controllers</folder>
+        <folder>helpers</folder>
+    </files>
+    <languages folder="site">
+        
+			<language tag="en-GB">language/en-GB.com_joomlurgy.ini</language>
+    </languages>
+    <administration>
+        <menu img="components/com_joomlurgy/assets/images/s_com_joomlurgy.png" >COM_JOOMLURGY</menu>
+        <submenu>
+            
+			<menu link="option=com_joomlurgy&amp;view=joomlurgyevents" view="joomlurgyevents" img="components/com_joomlurgy/assets/images/s_joomlurgyevents.png" alt="Joomlurgy/Joomlurgyevents">COM_JOOMLURGY_TITLE_JOOMLURGYEVENTS</menu>
+
+        </submenu>
+        <files folder="administrator">
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <filename>controller.php</filename>
+            <filename>index.html</filename>
+            <filename>joomlurgy.php</filename>
+            <folder>controllers</folder>
+            <folder>assets</folder>
+            <folder>helpers</folder>
+            <folder>models</folder>
+            <folder>sql</folder>
+            <folder>tables</folder>
+            <folder>views</folder>
+        </files>
+        <languages folder="administrator">
+            
+			<language tag="en-GB">language/en-GB.com_joomlurgy.ini</language>
+			<language tag="en-GB">language/en-GB.com_joomlurgy.sys.ini</language>
+        </languages>
+    </administration>
+</extension>
+

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+
+              <field name="id" type="text" default="0" label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+
+       <field name="created_by" type="createdby" default="" 
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_CREATED_BY"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_CREATED_BY"  /> 
+
+       <field name="name" type="text"
+                
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_NAME"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_NAME" 
+                
+                
+                 required="true" 
+            filter="raw"
+            size="100"
+            maxlength="255" /> 
+
+       <field name="cycle" type="list"
+                
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_CYCLE"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_CYCLE" 
+                
+                
+                 required="true" 
+            filter="raw">
+                <option value="A">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE1</option>
+                <option value="B">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE2</option>
+                <option value="C">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE3</option>
+                <option value="O">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE4</option>
+                <option value="E">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE5</option>
+                <option value="F">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE6</option>
+        </field> 
+
+ 
+		<field name="filter_cycle" type="list" onchange="this.form.submit();">
+			<option value="">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE_FILTER</option>
+		<option value="A">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE1</option>
+                <option value="B">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE2</option>
+                <option value="C">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE3</option>
+                <option value="O">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE4</option>
+                <option value="E">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE5</option>
+                <option value="F">COM_JOOMLURGY_JOOMLURGYEVENTS_CYCLE6</option>
+		</field> 
+
+       <field name="period" type="list"
+                
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_PERIOD" 
+                
+                
+                 required="true" 
+            filter="raw">
+                <option value="A">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD1</option>
+                <option value="X">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD2</option>
+                <option value="L">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD3</option>
+                <option value="E">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD4</option>
+                <option value="C">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD5</option>
+                <option value="F">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD6</option>
+                <option value="O">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD7</option>
+        </field> 
+
+ 
+		<field name="filter_period" type="list" onchange="this.form.submit();">
+			<option value="">COM_JOOMLURGY_JOOMLURGYEVENTS_PERIOD_FILTER</option>
+		<option value="A">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD1</option>
+                <option value="X">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD2</option>
+                <option value="L">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD3</option>
+                <option value="E">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD4</option>
+                <option value="C">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD5</option>
+                <option value="F">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD6</option>
+                <option value="O">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_PERIOD7</option>
+		</field> 
+
+       <field name="detail" type="text"
+                
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_DETAIL"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_DETAIL" 
+                
+                
+            
+            filter="raw"
+            size="100"
+            maxlength="200" />
+
+       <field name="weight" type="list"
+                
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_WEIGHT" 
+                
+                
+                 required="true" 
+            filter="raw">
+                <option value="0">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT0</option>
+                <option value="1">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT1</option>
+                <option value="2">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT2</option>
+                <option value="3">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT3</option>
+                <option value="4">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT4</option>
+                <option value="5">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT5</option>
+                <option value="6">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT6</option>
+                <option value="7">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT7</option>
+                <option value="8">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT8</option>
+        </field> 
+
+ 
+		<field name="filter_weight" type="list" onchange="this.form.submit();">
+			<option value="">COM_JOOMLURGY_JOOMLURGYEVENTS_WEIGHT_FILTER</option>
+		<option value="0">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT0</option>
+                <option value="1">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT1</option>
+                <option value="2">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT2</option>
+                <option value="3">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT3</option>
+                <option value="4">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT4</option>
+                <option value="5">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT5</option>
+                <option value="6">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT6</option>
+                <option value="7">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT7</option>
+                <option value="8">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT8</option>
+		</field> 
+
+       <field name="scripture1" type="text"
+                
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_SCRIPTURE1"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_SCRIPTURE1" 
+                
+                
+                 required="true" 
+             filter="raw"
+            size="100"
+            maxlength="200" /> 
+
+       <field name="scripture2" type="text"
+                
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_SCRIPTURE2"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_SCRIPTURE2" 
+                
+                
+                 required="true" 
+             filter="raw"
+            size="100"
+            maxlength="200" />
+
+       <field name="gospel" type="text"
+                
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_GOSPEL"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_GOSPEL" 
+                
+                
+                 required="true" 
+             filter="raw"
+            size="100"
+            maxlength="200" />> 
+
+<!--       <field name="category" type="text" size="40" class="inputbox"
+        
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_CATEGORY"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_CATEGORY" 
+        
+        
+        
+        filter="safehtml" /> -->
+        
+          <field name="category" type="category" extension="com_content"
+					multiple="false" size="5"
+					label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_CATEGORY"
+					description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_CATEGORY"
+				>
+					<option value="">JOPTION_ALL_CATEGORIES</option>
+				</field>
+       
+       <field name="cat_celeb" type="category" extension="com_content"
+					multiple="false" size="5"
+					label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_CAT_CELEB"
+					description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_CAT_CELEB"
+				>
+					<option value="">JOPTION_ALL_CATEGORIES</option>
+				</field>
+
+<!--       <field name="cat_celeb" type="text" size="40" class="inputbox"
+        
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_CAT_CELEB"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_CAT_CELEB" 
+        
+        
+        
+        filter="safehtml" /> -->
+        
+          <field name="cat_doc" type="category" extension="com_content"
+					multiple="false" size="5"
+					label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_CAT_DOC"
+					description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_CAT_DOC"
+				>
+					<option value="">JOPTION_ALL_CATEGORIES</option>
+				</field>
+
+<!--       <field name="cat_doc" type="text" size="40" class="inputbox"
+        
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_CAT_DOC"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_CAT_DOC" 
+        
+        
+        
+        filter="safehtml" /> -->
+
+       <field name="created_date" type="calendar" class="inputbox"
+        
+        
+         default="0000-00-00 00:00:00" 
+        
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_CREATED_DATE"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_CREATED_DATE" 
+        filter="safehtml" /> 
+
+       <field name="modified_date" type="calendar"
+                
+            label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_MODIFIED_DATE"
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_MODIFIED_DATE" 
+                
+                
+                
+            filter="raw" /> 
+
+         <field
+        name="state"
+        type="list"
+        label="JSTATUS"
+        description="JFIELD_PUBLISHED_DESC"
+        class="inputbox"
+        size="1"
+        default="1">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field> 
+
+                        <field name="checked_out" type="hidden" filter="unset" />
+        <field name="checked_out_time" type="hidden" filter="unset" /> 
+
+ </fieldset> 
+
+ <fieldset 
+                        name="accesscontrol">
+                       <field name="asset_id" type="hidden" filter="unset" />
+                       <field name="rules"
+                            type="rules"
+                            label="JFIELD_RULES_LABEL"
+                            translate_label="false"
+                            filter="rules"
+                            validate="rules"
+                            class="inputbox"
+                            component="com_joomlurgy"
+                            section="joomlurgyevent"
+                        />
+
+	</fieldset>
+
+</form>
