@@ -16,7 +16,7 @@ $document = JFactory::getDocument();
 $document->addStyleSheet(JURI::base() . 'components/com_joomlurgy/assets/joomlurgy.css', 'text/css')
 ?>
 <?php if ($this->item) : ?>
-
+    <div class="componentheading"><?php echo JText::_('COM_JOOMLURGY_TITLE') ;?> <?php echo $this->item['joomlurgyevent_detail']->name; ?></div>
     <div class="item_fields">
         <h2><?php echo JText::_('COM_JOOMLURGY_SERMONS') ?></h2>
 

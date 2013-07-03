@@ -78,7 +78,7 @@ foreach ($cat as $doc_cat) {
     $cat_doc[] = JHtml::_('select.option', $doc_cat->id, $doc_cat->alias);
 }
 $form->cat_doc = JHtml::_('select.genericlist', $cat_doc, 'jform[cat_doc]', 
-        'class="inputbox"','value','text',$selectedCat,'jform_cat_doc');
+        'class="inputbox" size="5"','value','text',$selectedCat,'jform_cat_doc');
 ?>
 
 <!-- Form Starts Here  --->

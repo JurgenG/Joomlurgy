@@ -127,7 +127,7 @@
             description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_SCRIPTURE1" 
                 
                 
-                 required="true" 
+                 
              filter="raw"
             size="100"
             maxlength="200" /> 
@@ -138,7 +138,7 @@
             description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_SCRIPTURE2" 
                 
                 
-                 required="true" 
+                 
              filter="raw"
             size="100"
             maxlength="200" />
@@ -149,7 +149,7 @@
             description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_GOSPEL" 
                 
                 
-                 required="true" 
+                 
              filter="raw"
             size="100"
             maxlength="200" />> 
@@ -208,21 +208,17 @@
        <field name="created_date" type="calendar" class="inputbox"
         
         
-         default="0000-00-00 00:00:00" 
+         default="NOW"
         
             label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_CREATED_DATE"
             description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_CREATED_DATE" 
-        filter="safehtml" /> 
+        format="%Y-%m-%d %H:%M:%S" filter="user_utc" /> 
 
        <field name="modified_date" type="calendar"
                 
             label="COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_MODIFIED_DATE"
-            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_MODIFIED_DATE" 
-                
-                
-                
-            filter="raw" /> 
-
+            description="COM_JOOMLURGY_FORM_DESC_JOOMLURGYEVENT_MODIFIED_DATE"       
+           format="%Y-%m-%d %H:%M:%S" filter="user_utc" default="NOW" /> 
          <field
         name="state"
         type="list"

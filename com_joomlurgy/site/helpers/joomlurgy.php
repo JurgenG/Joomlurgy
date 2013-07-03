@@ -37,7 +37,7 @@ abstract class JoomlurgyHelper {
 
         // Set the filters based on the module params
         $model->setState('list.start', 0);
-        $model->setState('list.limit', 10);
+        $model->setState('list.limit', 100);
         $model->setState('filter.published', 1);
 
 
@@ -85,17 +85,15 @@ abstract class JoomlurgyHelper {
         $query = "SELECT c.*, u.name as author FROM #__docman as c, #__users as u WHERE c.dmsubmitedby=u.id AND catid='" . $categorie . "' ORDER BY c.dmdate_published DESC";
         $db->setQuery($query);
         $rows = $db->loadObjectList();
-       
+
         if (is_array($rows) && (count($rows) > 0)) {
-          
+
             foreach ($rows as $row) {
                 $row->link = JRoute::_('index.php?option=com_docman&task=doc_details&gid=' . $row->id);
                 $row->category = $categorie;
-              
             }
         } else {
-           // $uitvoer = "<p>Geen documenten gevonden</p>\n";
-            
+            // $uitvoer = "<p>Geen documenten gevonden</p>\n";
         }
         return $rows;
     }
@@ -108,17 +106,26 @@ abstract class JoomlurgyHelper {
     public static function getVerses($scripture) {
 
         $result = array();
-        
-        if ($scripture && $scripture!= '-') {
+        $bible = array();
+        $user = & JFactory::getUser();
+        if (!$user->guest) {
+
+            $bible = self::GetMyBible();
+        } else {
+
+            $bible['title'] = 'NBV';
+        }
+
+        if ($scripture && $scripture != '-') {
             $db = & JFactory::getDBO();
 
-            $db->setQuery('select * from #__joomlurgy_bibleverses as jb where jb.perikope =' . $db->Quote($scripture));
+            $db->setQuery('select * from #__joomlurgy_bibleverses as jb where jb.bible = ' . $db->Quote($bible['title']) . ' and jb.perikope =' . $db->Quote($scripture));
             $scripture_content = $db->loadObjectList();
             if (!empty($scripture_content)) {
-                
+
                 $result = $scripture_content;
             } else {
-                
+
                 $result = self::_getVersusFromBiblija($scripture);
             }
 
@@ -133,147 +140,146 @@ abstract class JoomlurgyHelper {
      */
     private static function _getVersusFromBiblija($scripture) {
         $result = array();
-        
+
         // for language
-         $lg = &JFactory::getLanguage(); 
+        $lg = &JFactory::getLanguage();
         $defaultLang = $lg->getTag();
-        $lang = explode('-',$defaultLang);
-        if($lang[0])
-        {
+        $lang = explode('-', $defaultLang);
+        if ($lang[0]) {
             $lng = $lang[0];
-        }
-        else
-        {
+        } else {
             // Have set default language as nl
             $lng = 'nl';
         }
-        
+
         // change scripture with . to validate scripture string to correct
         $pattern = '/(\w{2,})\./';
         $replacement = '${1}';
-        $scripture1 = preg_replace($pattern, $replacement, $scripture,1);
-        
+        $scripture1 = preg_replace($pattern, $replacement, $scripture, 1);
+
         // Getting bible version
-        $bible =array();
+        $bible = array();
         $bible = self::GetMyBible();
-        if($bible['id'])
-        {
-            $bid = "id".$bible['id'];
-        }
-        else
-        {
+        if ($bible['id']) {
+            $bid = "id" . $bible['id'];
+        } else {
             $bid = 'id18';
         }
-       
-        // getting content from biblija site
-        $html = file_get_html('http://www.biblija.net/biblija.cgi?m=' . urlencode($scripture1) . '&'.$bid.'=1&l='.$lng.'&set=10');
-      // echo 'http://www.biblija.net/biblija.cgi?m=' . urlencode($scripture1) . '&id18=1&l=nl&set=10';
-        $innerHtml = $html->find('td.text', 0)->outertext; 
-        if($innerHtml) {
-            
-        
-         $strhtml = str_get_html($innerHtml); 
-         foreach($strhtml->find('img') as $element) {
-              $element->src = '';
-              $element->name = '';
-         }
-         foreach($strhtml->find('a') as $element) {
-              $element->href = '';
-              $element->title = '';
-              $element->innertext = '';
-         }
-        //echo $strhtml; die;
-       // $innerHtml = $strhtml->find('td.text', 0)->innertext;
-        $plainText = utf8_decode($strhtml->find('td.text', 0)->plaintext);
-        // echo $plainText = preg_replace("/[^\p{Latin} ]/u", "", $plainText);
-        $plainText = preg_replace('/[^\w\d_ -]/si', '', $plainText);
-        
 
-        $verses = preg_split("/\s\d+\s/", $plainText);
-        
-        $versesNumbers = array();
-        $i = 0;
-        foreach ($html->find('span.v1') as $element) {
-            $versesNumbers[$i] = $element->innertext;
-            $i++;
-        }
+        // getting content from biblija site
+        $html = file_get_html('http://www.biblija.net/biblija.cgi?m=' . urlencode($scripture1) . '&' . $bid . '=1&l=' . $lng . '&set=10');
+       // echo 'http://www.biblija.net/biblija.cgi?m=' . urlencode($scripture1) . '&'.$bid.'=1&l='.$lng.'&set=10';
+        $innerHtml = $html->find('td.text', 0)->outertext;
+        if ($innerHtml) {
+
+
+            $strhtml = str_get_html($innerHtml);
+            foreach ($strhtml->find('img') as $element) {
+                $element->src = '';
+                $element->name = '';
+            }
+            foreach ($strhtml->find('a') as $element) {
+                $element->href = '';
+                $element->title = '';
+                $element->innertext = '';
+            }
+            //echo $strhtml; die;
+            // $innerHtml = $strhtml->find('td.text', 0)->innertext;
+            $plainText = utf8_decode($strhtml->find('td.text', 0)->plaintext);
+            // echo $plainText = preg_replace("/[^\p{Latin} ]/u", "", $plainText);
+            $plainText = preg_replace('/[^\w\d_ -]/si', '', $plainText);
+
+
+            $verses = preg_split("/\s\d+\s/", $plainText);
+
+            $versesNumbers = array();
+            $i = 0;
+            foreach ($html->find('span.v') as $element) {
+                $versesNumbers[$i] = $element->innertext;
+                $i++;
+            }
 //        $versesNumberRegEx = '/<span \b[^>]*>(.*?)<\/span>/s';
 //        preg_match_all($versesNumberRegEx, $innerHtml, $versesNumbers);
 
 
-        for ($i = 0; $i < count($verses); $i++) {
-            if (!preg_match('/[a-zA-Z]+/', $verses[$i])) {
-               
-                unset($verses[$i]);
-            } else {
-                $verses[$i] = str_replace(chr(160), '', trim($verses[$i]));
-            }
-        }
+            for ($i = 0; $i < count($verses); $i++) {
+                if (!preg_match('/[a-zA-Z]+/', $verses[$i])) {
 
-        $versesNumbers = array_map(function($a) {
-                    if (preg_match('/\d+/', $a, $match)) {
-                        return $match[0];
-                    } else {
-                        return trim($a);
+                    unset($verses[$i]);
+                } else {
+                    $verses[$i] = str_replace(chr(160), '', trim($verses[$i]));
+                }
+            }
+
+            $versesNumbers = array_map(function($a) {
+                        if (preg_match('/\d+/', $a, $match)) {
+                            return $match[0];
+                        } else {
+                            return trim($a);
+                        }
+                    }, $versesNumbers);
+
+
+//            var_dump($verses);
+//            var_dump($versesNumbers);
+            if (!empty($verses) && !empty($versesNumbers)) {
+                if (count($verses) == count($versesNumbers) || (count($verses) > count($versesNumbers)) || (count($versesNumbers) > count($verses))) {
+                    if (count($verses) > count($versesNumbers)) {
+                        $diff = count($verses) - count($versesNumbers);
+                        for ($i = 1; $i <= $diff; $i++) {
+                            $first_key = key($verses);
+                            unset($verses[$first_key]);
+                        }
                     }
-                }, $versesNumbers);
-
-           
-      
-        if(!empty($verses) && !empty($versesNumbers)) {
-        if (count($verses) == count($versesNumbers) || (count($verses)>count($versesNumbers)) || (count($versesNumbers)>count($verses))) {
-            if(count($verses) > count($versesNumbers)) {
-                $diff = count($verses) - count($versesNumbers); 
-                for($i=1;$i<=$diff; $i++)
-                {
-                $first_key  = key($verses);
-               unset($verses[$first_key]);
+                    if (count($versesNumbers) > count($verses)) {
+                        $diff = count($versesNumbers) - count($verses);
+                        for ($i = 1; $i <= $diff; $i++) {
+                            $first_key = key($versesNumbers);
+                            unset($versesNumbers[$first_key]);
+                        }
+                    }
+                    $result = array_combine($versesNumbers, $verses);
                 }
             }
-            if(count($versesNumbers) > count($verses)) {
-                $diff = count($versesNumbers) - count($verses); 
-                for($i=1;$i<=$diff; $i++)
-                {
-                $first_key  = key($versesNumbers);
-               unset($versesNumbers[$first_key]);
+
+            if ($result) {
+                $db = & JFactory::getDBO();
+                $chapter = explode(',', $scripture);
+
+
+                foreach ($result as $verse_number => $verses) {
+
+
+                    $query = "INSERT INTO " . $db->nameQuote('#__joomlurgy_bibleverses')
+                            . " (" . $db->nameQuote('id') . "," . $db->nameQuote('bible')
+                            . "," . $db->nameQuote('perikope') . "," . $db->nameQuote('content')
+                            . "," . $db->nameQuote('versus') . "," . $db->nameQuote('versus_number') . "," . $db->nameQuote('chapter') . ") VALUES (NULL," . $db->Quote($bible['title'])
+                            . "," . $db->Quote($scripture) . "," . $db->Quote('') . "," . $db->Quote($verses) . "," . $db->Quote($verse_number) . "," . $db->Quote($chapter[0]) . ")";
+
+                    $db->setQuery($query);
+                    $db->query();
+                }
+
+                $bible = array();
+                $user = & JFactory::getUser();
+                if (!$user->guest) {
+
+                    $bible = self::GetMyBible();
+                } else {
+
+                    $bible['title'] = 'NBV';
+                }
+                $db->setQuery('select * from #__joomlurgy_bibleverses as jb where jb.bible = ' . $db->Quote($bible['title']) . ' and jb.perikope =' . $db->Quote($scripture));
+                $scripture_content = $db->loadObjectList();
+                if (!empty($scripture_content)) {
+
+                    $result = $scripture_content;
                 }
             }
-            $result = array_combine($versesNumbers, $verses);
-        }
-        
-        }
-
-        if ($result) {
-            $db = & JFactory::getDBO();
-            $chapter = explode(',', $scripture);
-            
-
-            foreach ($result as $verse_number => $verses) {
-
-
-                $query = "INSERT INTO " . $db->nameQuote('#__joomlurgy_bibleverses')
-                        . " (" . $db->nameQuote('id') . "," . $db->nameQuote('bible')
-                        . "," . $db->nameQuote('perikope') . "," . $db->nameQuote('content')
-                        . "," . $db->nameQuote('versus') . "," . $db->nameQuote('versus_number') . "," . $db->nameQuote('chapter') . ") VALUES (NULL," . $db->Quote($bible['title'])
-                        . "," . $db->Quote($scripture) . "," . $db->Quote('') . "," . $db->Quote($verses) . "," . $db->Quote($verse_number) . "," . $db->Quote($chapter[0]) . ")";
-
-                $db->setQuery($query);
-                $db->query();
-            }
-            
-            $db->setQuery('select * from #__joomlurgy_bibleverses as jb where jb.perikope =' . $db->Quote($scripture));
-            $scripture_content = $db->loadObjectList();
-            if (!empty($scripture_content)) {
-                
-                $result = $scripture_content;
-            }
-            
+        } else {
+            $result = false;
         }
 
-       } else {
-           $result = false;
-       }
-       
 
         return $result;
     }
@@ -290,43 +296,44 @@ abstract class JoomlurgyHelper {
         $db = & JFactory::getDBO();
         $db->setQuery($query);
         $bijbelversie = $db->loadResult();
+
         $versie = array();
         switch ($bijbelversie) {
-            case "Willibrord '95" : 
+            case "Willibrord '95" :
                 $versie['id'] = "35";
                 $versie['title'] = "WV95";
                 break;
-            case "Nieuwe Bijbelvertaling" : 
-               $versie['id'] = "18";
-               $versie['title'] = "NBV";
+            case "Nieuwe Bijbelvertaling" :
+                $versie['id'] = "18";
+                $versie['title'] = "NBV";
                 break;
             case "Naardense bijbel" :  // One english 
-               $versie['id'] = "32";
-               $versie['title']  = "CEV";
+                $versie['id'] = "32";
+                $versie['title'] = "CEV";
                 break; // Site Naardense Vertaling !!
-            case "Statenvertaling (Jongbloed)" : 
-               $versie['id'] = "37";
-               $versie['title'] = "SV-J";
+            case "Statenvertaling (Jongbloed)" :
+                $versie['id'] = "37";
+                $versie['title'] = "SV-J";
                 break; // Vertrekken vanaf Biblija.net !!
-            case "NBG-1951" : 
-               $versie['id'] = "16";
-               $versie['title'] = "NBG51";
+            case "NBG-1951" :
+                $versie['id'] = "16";
+                $versie['title'] = "NBG51";
                 break;
             case "Groot Nieuws Bijbel '96" :
-                
-               $versie['id'] = "17";
-               $versie['title'] = "GNB96";
+
+                $versie['id'] = "17";
+                $versie['title'] = "GNB96";
                 break;
             case "Vulgaat, 1592" :
-                
-               $versie['id'] = "38";
-               $versie['title'] = "VLC";
+
+                $versie['id'] = "38";
+                $versie['title'] = "VLC";
                 break;
 
-            default : 
-                
-               $versie['id'] = "18";
-               $versie['title'] = "NBV";
+            default :
+
+                $versie['id'] = "18";
+                $versie['title'] = "NBV";
                 break;
         }
         return $versie;
