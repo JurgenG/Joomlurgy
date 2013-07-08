@@ -295,45 +295,52 @@ abstract class JoomlurgyHelper {
         $query = "SELECT `cb_voorkeurbijbelvertaling` FROM `#__comprofiler` WHERE `user_id`=" . $user->id;
         $db = & JFactory::getDBO();
         $db->setQuery($query);
-        $bijbelversie = $db->loadResult();
+        $bibleversion = $db->loadResult();
 
         $versie = array();
-        switch ($bijbelversie) {
+        
+        switch ($bibleversion) {
             case "Willibrord '95" :
                 $versie['id'] = "35";
                 $versie['title'] = "WV95";
                 break;
+
             case "Nieuwe Bijbelvertaling" :
                 $versie['id'] = "18";
                 $versie['title'] = "NBV";
                 break;
+
+			// FIXME: Put in right bible name
             case "Naardense bijbel" :  // One english 
                 $versie['id'] = "32";
                 $versie['title'] = "CEV";
-                break; // Site Naardense Vertaling !!
+                break;
+
             case "Statenvertaling (Jongbloed)" :
                 $versie['id'] = "37";
                 $versie['title'] = "SV-J";
-                break; // Vertrekken vanaf Biblija.net !!
+                break;
+                
             case "NBG-1951" :
                 $versie['id'] = "16";
                 $versie['title'] = "NBG51";
                 break;
-            case "Groot Nieuws Bijbel '96" :
 
+            case "Groot Nieuws Bijbel '96" :
                 $versie['id'] = "17";
                 $versie['title'] = "GNB96";
                 break;
-            case "Vulgaat, 1592" :
 
+            case "Vulgaat, 1592" :
                 $versie['id'] = "38";
                 $versie['title'] = "VLC";
                 break;
 
+            //TODO: Add other bible versions    
+            
             default :
-
-                $versie['id'] = "18";
-                $versie['title'] = "NBV";
+                $versie['id'] = "35";
+                $versie['title'] = "WV95";
                 break;
         }
         return $versie;
