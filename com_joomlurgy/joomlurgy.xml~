@@ -7,7 +7,7 @@
     <author>nidhi</author>
     <authorEmail>nidhi.gupta@daffodilsw.com</authorEmail>
     <authorUrl>http://</authorUrl>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <description></description>
     
     <install> <!-- Runs on install -->
@@ -30,6 +30,7 @@
         <folder>models</folder>
         <folder>controllers</folder>
         <folder>helpers</folder>
+	<folder>assets</folder>
     </files>
     <languages folder="site">
         
@@ -63,5 +64,4 @@
         </languages>
     </administration>
 </extension>
-<!-- Component built by the Joomla Component Creator -->
-<!-- http://www.notwebdesign.com/joomla-component-creator/ -->
+

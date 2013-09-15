@@ -169,7 +169,10 @@ class JoomlurgyModeljoomlurgyevents extends JModelList {
 
 		//Filtering weight
 		$filter_weight = $this->state->get("filter.weight");
-		if ($filter_weight) {
+    	       //code add by yogi
+		if($filter_weight == '-1')
+		$filter_weight = '0';
+		if ($filter_weight != '') {
 			$query->where("a.weight = '".$db->escape($filter_weight)."'");
 		}
 

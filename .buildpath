@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry kind="src" path="com_joomlurgy/administrator"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/joomla-cms"/>
+	<buildpathentry kind="src" path="com_joomlurgy/site"/>
+</buildpath>

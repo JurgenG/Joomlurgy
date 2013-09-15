@@ -56,9 +56,15 @@ private static function putDate($theDate=0) {
  *
  */
 public static function getTeksten($categorie) {
-	$db =& JFactory::getDBO();
-	$query = "SELECT c.*, u.name as author FROM #__content as c, #__users as u WHERE c.created_by=u.id AND catid='". $categorie ."' AND c.state=1 ORDER BY c.created DESC";
-	$db->setQuery($query);
+	$db = JFactory::getDBO();
+	$query = $db->getQuery(true);
+	$query
+		->select(array('c.*', 'u.name as author'))
+		->from("#__content as c")
+		->join("INNER","#__users as u ON (c.created_by=u.id)")
+		->where("catid='$categorie' AND c.state=1")
+		->order("c.created DESC");
+		$db->setQuery($query);
 	$rows = $db->loadObjectList();
 	if(is_array($rows) && (count($rows)>0)) {
 		$uitvoer = "<ul>\n";
@@ -86,7 +92,7 @@ public static function getSunday($theDate=0) {
 
 		$theDate	= litdate::putDate($theDate);
 		$theYear	= date("Y", $theDate);
-		$thisDay	= date("z", $theDate);
+		$thisDay	= date("z", $theDate); 
 		$shift		= date("w", $theDate)?7-date("w",$theDate):0; // if Sunday: current is now
 		$theSunday	= mktime(0,0,0,date('n',$theDate),date('j',$theDate) + $shift,$theYear);
 		return $theSunday;
@@ -293,16 +299,15 @@ public static function Cycle($theDate=0) {
  */
 public static function getDate($theDate=0, $forsunday=true, $item="*") {
 
-	// global $database;
-	$database =& JFactory::getDBO();
-	
+	// Initiate database connection
+	$db =& JFactory::getDBO();
 	//legacy bug fix - TODO : remove all occurances of reading1 and reading2
 	$item = str_replace("reading","scripture",$item);
 	
 	// Setting Date to current if zero (none given)
 	$theDate    = ($theDate == 0 ? time() : $theDate);
-	$theYear	= date("Y", $theDate);
-	$sundayTS 	= litdate::getSunday($theDate);
+	$theYear	= date("Y", $theDate); 
+	$sundayTS 	= litdate::getSunday($theDate); //echo $sundayTS; 
 	$sunday 	= date("z", $sundayTS);
 	$theDate	= ($forsunday ? litdate::putDate($sundayTS) : litdate::putDate($theDate));
 	$checkingdate = date("z",$theDate);
@@ -363,15 +368,23 @@ public static function getDate($theDate=0, $forsunday=true, $item="*") {
 		$arrDate["detail"]=($sunday > $AdvEnd ?($sunday - $AdvEnd)/7 : 1);
 		
 	}
+	$arrDate["periodAbbr"] = $period;
 	$arrDate["cycle"]=litdate::Cycle($theDate);
 	$arrDate["timestamp"]= mktime(0,0,0,1,1+$checkingdate, $theYear);
-
+    //round to the detail because we are getting in decimal.
+   // $arrDate["detail"] = round($arrDate["detail"]);
+    
 	$QueryValues = Array("*","id","gospel","scripture1","scripture2","sermons","celebrations","documents","name");
 	if(in_array($item, $QueryValues)){
-		$Query = "SELECT * FROM #__joomlurgy WHERE " . $database->nameQuote("period"). "='" . $period . "' AND " . $database->nameQuote("cycle") ."='". $arrDate["cycle"] ."' AND " . $database->nameQuote("detail")."='" . $arrDate["detail"] . "'";
-		$database->SetQuery($Query);
-		$row = NULL;
-		$row = $database->loadObject();
+		$query = $db->getQuery(true);
+		$query
+			->select('*')
+			->from('#__joomlurgy_')
+			->where("period LIKE " . $db->quote($arrDate["periodAbbr"]))
+			->where("cycle LIKE "  . $db->quote($arrDate["cycle"]))
+			->where("detail LIKE " . $db->quote($arrDate["detail"]));
+		$db->setQuery($query);
+		$row = $db->loadObject();
 		if($item=="*") {
 			$arrDate["id"]			= $row->id;
 			$arrDate["gospel"]	 	= $row->gospel;
@@ -383,10 +396,11 @@ public static function getDate($theDate=0, $forsunday=true, $item="*") {
 			$arrDate["celebrations"]= $row->cat_celeb;
 			$arrDate["documents"] 	= $row->cat_doc;
 			$arrDate["name"]	 	= $row->name;
+			$arrDate["weight"]	 	= $row->weight;
 		} else {
 			$arrDate[$item]			= $row->{$item};
 		}
-	}
+	} 
 	if($item=="*") {return $arrDate;}
 	elseif(isset($arrDate[$item])) { return $arrDate[$item];}
 	else { return false; }

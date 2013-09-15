@@ -13,7 +13,8 @@ defined('_JEXEC') or die;
 $lang = JFactory::getLanguage();
 $lang->load('com_joomlurgy', JPATH_ADMINISTRATOR);
 $document = JFactory::getDocument();
-$document->addStyleSheet(JURI::base() . 'components/com_joomlurgy/assets/joomlurgy.css', 'text/css')
+$document->addStyleSheet(JURI::base() . 'components/com_joomlurgy/assets/joomlurgy.css', 'text/css');
+//echo "<pre>"; print_r($this->item); exit;
 ?>
 <?php if ($this->item) : ?>
     <div class="componentheading"><?php echo JText::_('COM_JOOMLURGY_TITLE') ;?> <?php echo $this->item['joomlurgyevent_detail']->name; ?></div>
@@ -32,9 +33,9 @@ $document->addStyleSheet(JURI::base() . 'components/com_joomlurgy/assets/joomlur
             $i = 0;
             if ($this->item['sermons']) {
                 foreach ($this->item['sermons'] as $sermon) {
-
-                    // echo $sermon->id;
-                    $Authorname = ($sermon->created_by_alias == "") ? $sermon->author : $sermon->created_by_alias . " (" . $sermon->author . ")";
+                     $myauthorname = $this->authorname($sermon->created_by);
+                   // $Authorname = ($sermon->created_by_alias == "") ? $sermon->author : $sermon->created_by_alias . " (" . $sermon->author . ")";
+                    $Authorname = ($sermon->created_by_alias == "") ? $sermon->author : $sermon->author.' ('.$myauthorname.')';
                     ?>
 
 
@@ -69,9 +70,9 @@ $document->addStyleSheet(JURI::base() . 'components/com_joomlurgy/assets/joomlur
             <?php
             if ($this->item['celebrations']) {
                 foreach ($this->item['celebrations'] as $celeb) {
-
-
-                    $Authorname = ($celeb->created_by_alias == "") ? $celeb->author : $celeb->created_by_alias . " (" . $celeb->author . ")";
+					$myauthorname = $this->authorname($sermon->created_by);
+					//$Authorname = ($celeb->created_by_alias == "") ? $celeb->author : $celeb->created_by_alias . " (" . $celeb->author . ")";
+                    $Authorname = ($celeb->created_by_alias == "") ? $celeb->author : $celeb->author . " (" . $myauthorname . ")";
                     ?>
 
 
@@ -109,8 +110,6 @@ $document->addStyleSheet(JURI::base() . 'components/com_joomlurgy/assets/joomlur
             <?php
             if ($this->item['doc_cat']) {
                 foreach ($this->item['doc_cat'] as $doc) {
-
-
                     $Authorname = $doc->author;
                     ?>
 
@@ -143,11 +142,7 @@ $document->addStyleSheet(JURI::base() . 'components/com_joomlurgy/assets/joomlur
     if (!empty($this->item['scripture1'])) {
         foreach ($this->item['scripture1'] as $scripture) {
             ?>
-                    <li><span class="versenumber"><?php echo '[' . $scripture->versus_number . ']' . '</span>&nbsp;&nbsp;' . $scripture->versus; ?></li>
-
-
-
-
+                    <li><span class="versenumber"><?php echo '[' . $scripture->versus_number . ']' . '</span>&nbsp;' . str_replace('&acirc;', '', $scripture->versus); ?></li>
                     <?php
                 }
             } else {
@@ -164,12 +159,8 @@ $document->addStyleSheet(JURI::base() . 'components/com_joomlurgy/assets/joomlur
     if (!empty($this->item['scripture2'])) {
         foreach ($this->item['scripture2'] as $scripture) {
             ?>
-                    <li><span class="versenumber"><?php echo '[' . $scripture->versus_number . ']' . '</span>&nbsp;&nbsp;' . $scripture->versus; ?></li>
-
-
-
-
-                    <?php
+                    <li><span class="versenumber"><?php echo '[' . $scripture->versus_number . ']' . '</span>&nbsp;' . ltrim($scripture->versus); ?></li>
+                   <?php
                 }
             } else {
 
@@ -185,7 +176,7 @@ $document->addStyleSheet(JURI::base() . 'components/com_joomlurgy/assets/joomlur
     if (!empty($this->item['gospel'])) {
         foreach ($this->item['gospel'] as $scripture) {
             ?>
-                    <li><span class="versenumber"><?php echo '[' . $scripture->versus_number . ']' . '</span>&nbsp;&nbsp;' . $scripture->versus; ?></li>
+                    <li><span class="versenumber"><?php echo '[' . $scripture->versus_number . ']' . '</span>&nbsp;' . $scripture->versus; ?></li>
 
 
 
@@ -213,3 +204,4 @@ endif;
 <hr />
 <p class="copyright"><?php echo $this->item['copyright']; ?></p>
 <hr />
+

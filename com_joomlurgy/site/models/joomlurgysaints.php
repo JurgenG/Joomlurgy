@@ -87,7 +87,8 @@ class JoomlurgyModelJoomlurgysaints extends JModelList {
                 $query->where('( a.name LIKE '.$search.'  OR  a.scripture1 LIKE '.$search.'  OR  a.scripture2 LIKE '.$search.'  OR  a.gospel LIKE '.$search.' )');
             }
         }
-
+        //code for sorting by month,day
+        $query->order('a.month asc, a.day asc');
         
 
 		

@@ -33,7 +33,7 @@ function JoomlurgyBuildRoute(&$query)
 						->where('id='.(int)$query['id'])
 					);
 					$eventdata = $db->loadObject();
-					$query['id'] = $eventdata->cycle.'/'.$eventdata->period.'/'.$eventdata->detail;
+					$query['id'] = $query['id'].':'.$eventdata->cycle.'/'.$eventdata->period.'/'.$eventdata->detail;
 	 }
 	if($view == 'joomlurgysaint'){
 				$db = JFactory::getDbo();
@@ -50,7 +50,7 @@ function JoomlurgyBuildRoute(&$query)
 		$segments[] = $query['id'];
 		unset($query['id']);
 	}
-        unset($segments[0]);
+	unset($segments[0]);
 	return $segments;
 }
 
@@ -66,42 +66,35 @@ function JoomlurgyBuildRoute(&$query)
  */
 function JoomlurgyParseRoute($segments)
 {
-        $count =  count($segments); 
+	
 	$vars = array(); 
-        if($count == 3){
-            array_unshift($segments,'joomlurgyevent');
-            $view = 'joomlurgyevent';
-        }else {
-            array_unshift($segments,'joomlurgysaint');
-            $view = 'joomlurgysaint';
-        }
-        $segments2 = array();
-	$view = $segments[0];
+	
 	// view is always the first element of the array
 	$count = count($segments); 
-	if($segments[0] == 'joomlurgysaint'){
-		$segments1 = $segments;
+	if($count <= 2){
+	$view = 'joomlurgysaint';
 	}else {
-            $segments2 = $segments;
-        }
+	$view = 'joomlurgyevent';
+	}
+	if($view == 'joomlurgysaint'){
+		$segments1 = $segments;
+	}
 	
 	if ($count)
 	{
 		$count--;
 		$segment = array_pop($segments) ;  
 		//$segment = str_replace(':', '-', $segments);
-		if($segments[0] == 'joomlurgysaint'){ 
-			list($id, $alias) = explode(':', $segments1[1], 2); 
-		} 
+		if($view == 'joomlurgysaint'){
+			list($id, $alias) = explode(':', $segments1[0], 2); 
+		} else{
+		    list($id, $alias) = explode(':', $segments[0], 2); 
+		}
 		if (is_numeric($id)) {
-                 
 		 $vars['id'] = $id;
-                
 		}
 		else{
-                    
 			$count--;
-                       
 			$vars['task'] = array_pop($segments) . '.' . $segment;
 		}
 	}
@@ -111,21 +104,25 @@ function JoomlurgyParseRoute($segments)
 		$vars['task'] = implode('.',$segments);
 	}
 	
-	switch($segments[0])
+	if($count <= 2){
+	$vars['view'] = 'joomlurgysaint';
+			$id = $segments[0];
+	
+	}else {
+		$vars['view'] = 'joomlurgyevent';
+			$id = $segments[0];
+	}
+	/*switch($segments[0])
 	{
 		case 'joomlurgyevent':
 			$vars['view'] = 'joomlurgyevent';
 			$id = $segments[1];
-                        
-                        $vars['cycle']= $segments2[1];
-		        $vars['period']= $segments2[2];
-		        $vars['detail']= $segments2[3];
 			break;
 		case 'joomlurgysaint':
 			$vars['view'] = 'joomlurgysaint';
 			$id = $segments[1];
 			break;
-	} 
-       
+	} */
+	var_dump($vars);
 	return $vars;
 }

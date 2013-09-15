@@ -61,6 +61,13 @@ class JoomlurgyModelJoomlurgysaint extends JModelForm
 	 */
 	public function &getData($id = null)
 	{
+           
+           /* $alias = $_GET['alias'];
+         
+           if(!empty($alias)){
+              $id =  $this->getIdByName($alias);
+           } */
+           
 		if ($this->_item === null)
 		{
 			$this->_item = false;
@@ -284,6 +291,18 @@ class JoomlurgyModelJoomlurgysaint extends JModelForm
             ->where('id = ' . $id);
         $db->setQuery($query);
         return $db->loadObject();
+    }
+    function getIdByName($name){
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query 
+            ->select('id')
+            ->from('#__joomlurgy_saints')
+            ->where('name like "' . $name.'"');
+        
+        $db->setQuery($query);
+        $result = $db->loadObject();
+        return $result->id ;
     }
     
 }

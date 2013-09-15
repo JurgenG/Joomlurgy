@@ -102,6 +102,21 @@ class JoomlurgyViewJoomlurgyevent extends JView {
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
 		}
+	}
+	    /*
+     * function for finding the name of the author
+     * @params $authorid
+     */
+	public function authorname($authorid)
+	{
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('a.name');
+		$query->from('#__users as a');
+		$query->where('a.id = '.$authorid);
+		$db->setQuery($query); 
+		$result = $db->loadResult();
+		return $result;
 	}        
     
 }

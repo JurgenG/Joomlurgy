@@ -56,9 +56,21 @@ class JoomlurgyModelJoomlurgyevent extends JModelForm {
      * @return	mixed	Object on success, false on failure.
      */
     public function &getData($id = null) {
+        
+        
+           $cycle = $_GET['cycle'];
+           $period = $_GET['period'];
+           $detail = $_GET['detail'];
+         
+           if(!empty($cycle) && !empty($period) ){
+              $id =  $this->getIdByDetails($cycle , $period, $detail);
+           } 
+        
         if ($this->_item === null) {
             $this->_item = false;
-
+            
+            
+            
             if (empty($id)) {
                 $id = $this->getState('joomlurgyevent.id');
             }
@@ -269,4 +281,17 @@ class JoomlurgyModelJoomlurgyevent extends JModelForm {
         return $db->loadObject();
     }
 
+    
+     function getIdByDetails($cycle,$period,$detail){
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query 
+            ->select('id')
+            ->from('#__joomlurgy_')
+            ->where('cycle ="' . $cycle.'" AND  period = "'.$period.'" AND detail = '.$detail);
+        
+        $db->setQuery($query);
+        $result = $db->loadObject();
+        return $result->id ;
+    }
 }

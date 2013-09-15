@@ -96,7 +96,7 @@
                 
                  required="true" 
             filter="raw">
-                <option value="0">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT0</option>
+                <option value="01">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT0</option>
                 <option value="1">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT1</option>
                 <option value="2">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT2</option>
                 <option value="3">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT3</option>
@@ -110,7 +110,7 @@
  
 		<field name="filter_weight" type="list" onchange="this.form.submit();">
 			<option value="">COM_JOOMLURGY_JOOMLURGYEVENTS_WEIGHT_FILTER</option>
-		<option value="0">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT0</option>
+		<option value="-1">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT0</option>
                 <option value="1">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT1</option>
                 <option value="2">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT2</option>
                 <option value="3">COM_JOOMLURGY_FORM_LBL_JOOMLURGYEVENT_WEIGHT3</option>
