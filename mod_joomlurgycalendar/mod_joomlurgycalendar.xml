@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="1.6.0" client="site" method="upgrade">
 
-<name>MiniCalendar</name>
+<name>Joomlurgycalendar</name>
 <creationDate>31 March 2013</creationDate>
-<author>Les Arbres Design</author>
-<copyright>Les Arbres Design 2010-2013</copyright>
-<license>GPL</license>
-<authorUrl>http://extensions.lesarbresdesign.info</authorUrl>
-<version>3.05</version>
-<description>MiniCalendar</description>
+
+<description>JoomlurgyCalendar</description>
 
 <files>
-	<filename module="mod_minicalendar">mod_minicalendar.php</filename>
+	<filename module="mod_joomlurgycalendar">mod_joomlurgycalendar.php</filename>
 	<filename>helper.php</filename>
 	<filename>index.html</filename>
 </files>
 
 <languages folder="language">
-	<language tag="en-GB">en-GB.mod_minicalendar.ini</language>
-	<language tag="en-GB">en-GB.mod_minicalendar.sys.ini</language>
-	<language tag="fr-FR">fr-FR.mod_minicalendar.ini</language>
-	<language tag="fr-FR">fr-FR.mod_minicalendar.sys.ini</language>
-	<language tag="de-DE">de-DE.mod_minicalendar.ini</language>
-	<language tag="de-DE">de-DE.mod_minicalendar.sys.ini</language>
+	<language tag="en-GB">en-GB.mod_joomlurgycalendar.ini</language>
+	<language tag="en-GB">en-GB.mod_joomlurgycalendar.sys.ini</language>
+	<language tag="fr-FR">fr-FR.mod_joomlurgycalendar.ini</language>
+	<language tag="fr-FR">fr-FR.mod_joomlurgycalendar.sys.ini</language>
+	<language tag="de-DE">de-DE.mod_joomlurgycalendar.ini</language>
+	<language tag="de-DE">de-DE.mod_joomlurgycalendar.sys.ini</language>
 </languages>
 
 <config>

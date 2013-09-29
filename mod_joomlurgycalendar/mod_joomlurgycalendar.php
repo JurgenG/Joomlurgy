@@ -1,18 +1,18 @@
 <?php
-/********************************************************************
-Product    : MiniCalendar
-Author     : Les Arbres Design
-Date       : 31 March 2013
-Copyright  : Les Arbres Design 2010-2013
-Licence    : GNU General Public License
-Description: Displays a calendar in a module position
-*********************************************************************/
 
 defined('_JEXEC') or die('Restricted access');
 
 // make sure we only get one copy of the helper (allows multiple instances of the calendar)
 
-require_once (dirname(__FILE__).'/helper.php');
+if(file_exists(JPATH_BASE . DS . 'components' . DS . 'com_joomlurgy' . DS . 'helpers' . DS . 'litdate.class.php')){
+    require_once(JPATH_BASE . DS . 'components' . DS . 'com_joomlurgy' . DS . 'helpers' . DS . 'litdate.class.php');
+    require_once (dirname(__FILE__).'/helper.php');
+}
+else {
+    
+    JError::raiseWarning(100,JText::sprintf('MOD_MINICALENDAR_JOOMLURGY_ERROR'));
+    return false;
+}
 
 // Get module parameters
 
@@ -30,7 +30,7 @@ $debug 		     = $params->get('debug',0);
 if ($debug)
 	mc_init_debug();
 else
-	@unlink(JPATH_ROOT.'/modules/mod_minicalendar/trace.txt');
+	@unlink(JPATH_ROOT.'/modules/mod_joomlurgycalendar/trace.txt');
 
 // If any internal styles are defined, add them to the document head
 
