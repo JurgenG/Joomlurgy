@@ -19,6 +19,8 @@
 	<language tag="fr-FR">fr-FR.mod_joomlurgycalendar.sys.ini</language>
 	<language tag="de-DE">de-DE.mod_joomlurgycalendar.ini</language>
 	<language tag="de-DE">de-DE.mod_joomlurgycalendar.sys.ini</language>
+	<language tag="nl-NL">nl-NL.mod_joomlurgycalendar.ini</language>
+	<language tag="nl-NL">nl-NL.mod_joomlurgycalendar.sys.ini</language>
 </languages>
 
 <config>
