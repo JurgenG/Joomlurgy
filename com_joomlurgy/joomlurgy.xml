@@ -30,7 +30,8 @@
         <folder>models</folder>
         <folder>controllers</folder>
         <folder>helpers</folder>
-	<folder>assets</folder>
+		<folder>assets</folder>
+		<folder>tables</folder>
     </files>
     <languages folder="site">
         

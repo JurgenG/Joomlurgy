@@ -244,6 +244,13 @@ abstract class JoomlurgyHelper {
 		$query = "SELECT `cb_voorkeurbijbelvertaling` FROM `#__comprofiler` WHERE `user_id`=" . $user->id;
 		$db = & JFactory::getDBO();
 		$db->setQuery($query);
+		$db->query();
+		if($db->getErrorMsg() != '')
+		{
+			JFactory::getApplication()->enqueueMessage(JText::sprintf('COM_JOOMLURGY_COMMUNITY_ERROR'));
+		
+		   return false;	
+		}
 		$bijbelversie = $db->loadResult();
 
 		$versie = array();

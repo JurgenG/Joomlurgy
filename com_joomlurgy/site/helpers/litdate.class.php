@@ -300,7 +300,7 @@ public static function Cycle($theDate=0) {
 public static function getDate($theDate=0, $forsunday=true, $item="*") {
 
 	// Initiate database connection
-	$db =& JFactory::getDBO();
+	$db =JFactory::getDBO();
 	//legacy bug fix - TODO : remove all occurances of reading1 and reading2
 	$item = str_replace("reading","scripture",$item);
 	
@@ -322,11 +322,11 @@ public static function getDate($theDate=0, $forsunday=true, $item="*") {
 	$AdvEnd 	= date("z",litdate::Advent($theYear, 4));
 	$XMas		= date("z",litdate::Christmas($theYear));
 
-	if(!defined(_XMAS)) 	{ define(_XMAS,'Kersttijd'); }; 
-	if(!defined(_COMMON)) 	{ define(_COMMON,'Tijd door het jaar'); }; 
-	if(!defined(_LENT)) 	{ define(_LENT,'Veertigdagentijd'); }; 
-	if(!defined(_EASTER)) 	{ define(_EASTER,'Paastijd'); }; 
-	if(!defined(_ADVENT)) 	{ define(_ADVENT,'Advent'); }; 
+	if(!defined('_XMAS')) 	{ define('_XMAS','Kersttijd'); }; 
+	if(!defined('_COMMON')) 	{ define('_COMMON','Tijd door het jaar'); }; 
+	if(!defined('_LENT')) 	{ define('_LENT','Veertigdagentijd'); }; 
+	if(!defined('_EASTER')) 	{ define('_EASTER','Paastijd'); }; 
+	if(!defined('_ADVENT')) 	{ define('_ADVENT','Advent'); }; 
 	
 	if($checkingdate <= $XMasEnd) {
 		$arrDate["period"]= _XMAS;
@@ -385,6 +385,7 @@ public static function getDate($theDate=0, $forsunday=true, $item="*") {
 			->where("detail LIKE " . $db->quote($arrDate["detail"]));
 		$db->setQuery($query);
 		$row = $db->loadObject();
+                if($row) {
 		if($item=="*") {
 			$arrDate["id"]			= $row->id;
 			$arrDate["gospel"]	 	= $row->gospel;
@@ -400,6 +401,7 @@ public static function getDate($theDate=0, $forsunday=true, $item="*") {
 		} else {
 			$arrDate[$item]			= $row->{$item};
 		}
+                }
 	} 
 	if($item=="*") {return $arrDate;}
 	elseif(isset($arrDate[$item])) { return $arrDate[$item];}

@@ -12,7 +12,15 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.keepalive');
-require_once(JPATH_BASE . DS . 'components' . DS . 'com_docman' . DS . 'classes' . DS . 'DOCMAN_utils.class.php');
+if(file_exists(JPATH_BASE . DS . 'components' . DS . 'com_docman' . DS . 'classes' . DS . 'DOCMAN_utils.class.php')){
+    
+    require_once(JPATH_BASE . DS . 'components' . DS . 'com_docman' . DS . 'classes' . DS . 'DOCMAN_utils.class.php');
+}
+else {
+    
+    JError::raiseWarning(100,JText::sprintf('COM_JOOMLURGY_DOCMAN_ERROR'));
+    return false;
+}
 // Import CSS
 $document = JFactory::getDocument();
 $document->addStyleSheet('components/com_joomlurgy/assets/css/joomlurgy.css');
